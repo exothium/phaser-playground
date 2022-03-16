@@ -1,0 +1,19 @@
+# System and IDE files
+Thumbs.db
+.DS_Store
+.idea
+*.suo
+*.sublime-project
+*.sublime-workspace
+
+# Vendors
+node_modules/
+
+# Build
+dist/
+/npm-debug.log
+
+# Closed assets that the project depends on
+src/assets/fantasy_buttons_icons_set/**
+src/assets/gentel_forest/**
+
