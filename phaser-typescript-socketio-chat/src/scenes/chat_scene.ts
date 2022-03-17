@@ -1,6 +1,8 @@
 export default class ChatScene extends Phaser.Scene {
+    static readonly SCENE_KEY = 'CHAT_SCENE';
+
     constructor() {
-        super('demo');
+        super(ChatScene.SCENE_KEY);
     }
 
     preload() {
