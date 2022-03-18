@@ -13,7 +13,7 @@ export default class MenuScene extends Phaser.Scene {
 
     preload() {
         this.load.glsl('stars', 'assets/starfields.glsl.js');
-        this.load.html(MenuScene.LOGIN_FORM_ASSET_KEY, 'assets/login-form.html');
+        this.load.html(MenuScene.LOGIN_FORM_ASSET_KEY, 'assets/html/login-form.html');
     }
 
     create() {
