@@ -7,6 +7,10 @@ const config = {
     backgroundColor: '#125555',
     width: 800,
     height: 600,
+    parent: 'game',
+    dom: {
+        createContainer: true
+    },
     scene: [MenuScene, ChatScene]
 };
 
