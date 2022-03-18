@@ -1,13 +1,18 @@
 import 'phaser'
+import ChatScene from './scenes/chat_scene'
 import MainScene from './scenes/mainScene'
+import MenuScene from './scenes/menu_scene'
 import PreloadScene from './scenes/preloadScene'
 
-const DEFAULT_WIDTH = 1280
-const DEFAULT_HEIGHT = 720
+const DEFAULT_WIDTH = 800
+const DEFAULT_HEIGHT = 600
 
 const config = {
   type: Phaser.AUTO,
-  backgroundColor: '#ffffff',
+  dom: {
+      createContainer: true
+  },
+  backgroundColor: '#484848',
   scale: {
     parent: 'phaser-game',
     mode: Phaser.Scale.FIT,
@@ -15,7 +20,7 @@ const config = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
   },
-  scene: [PreloadScene, MainScene],
+  scene: [MenuScene, ChatScene, PreloadScene, MainScene],
   physics: {
     default: 'arcade',
     arcade: {
