@@ -1,7 +1,9 @@
 
-# World Chat in Phaserjs ![chat](https://user-images.githubusercontent.com/2754032/159345420-adda076e-1a3c-4379-9a98-6720226270e8.png)
-#### Using Socket.IO
+# World Chat in Phaserjs
+![phaser-chat-banner](https://user-images.githubusercontent.com/2754032/159346780-41ebd9c5-e359-4996-8f11-4e281b9e3f89.png)
 
+- Socket.IO
+- Phaser 3.5
 
 ### Proof of concept:
 - [x] send message between clients
