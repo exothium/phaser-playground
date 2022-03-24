@@ -41,8 +41,10 @@ export default class ChatScene extends Phaser.Scene implements ChatListener {
     onMessage(message: ChatMessageEvent): void {
         const newChatEntry = document.createElement("div");
         newChatEntry.innerHTML = `<span ${message.username === this.nickname ? 'class=\'self\'' : ''}>${message.username}:</span> ${message.message}`;
-        document.getElementById('chat-display')?.appendChild(newChatEntry)
-        document.getElementById('chat-display')!.scrollTop = document.getElementById('chat-display')!.scrollHeight;
+
+        let chatElement = this.chatTextArea.getChildByID('chat-display');
+        chatElement!.appendChild(newChatEntry);
+        chatElement!.scrollTop = chatElement!.scrollHeight;
     }
 
     private createAndAnimateLog() {

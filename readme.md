@@ -8,5 +8,6 @@
 ### Proof of concept:
 - [x] send message between clients
   - [x] phaser
-    - [ ] scroll   
+    - [x] word-wrap
+    - [x] scroll
   - [x] react
