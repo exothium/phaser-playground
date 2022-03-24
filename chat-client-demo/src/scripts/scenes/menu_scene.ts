@@ -21,13 +21,13 @@ export default class MenuScene extends Phaser.Scene {
     }
 
     private createUiElements() {
-        this.add.text(400, 250, "Chat Demo", {
+        this.add.text(640, 300, "Chat Demo", {
             color: "#FFFFFF",
             fontSize: '60px',
             fontStyle: "bold"
         }).setOrigin(0.5);
 
-        this.loginForm = this.add.dom(400, 350).createFromCache(MenuScene.LOGIN_FORM_ASSET_KEY);
+        this.loginForm = this.add.dom(640, 400).createFromCache(MenuScene.LOGIN_FORM_ASSET_KEY);
     }
 
     private addEventListeners() {

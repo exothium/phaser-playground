@@ -6,12 +6,12 @@ export default class ChatScene extends Phaser.Scene implements ChatListener {
     static readonly SCENE_KEY = 'CHAT_SCENE';
     
     private static readonly CHAT_FORM_ASSET_KEY = 'CHAT_FORM_ASSET_KEY';
+    private static readonly CHAT_DISPLAY_ASSET_KEY = 'CHAT_DISPLAY_ASSET_KEY';
     private static readonly PHASER_3_LOGO_ASSET_KEY = 'CHAT_FORM_ASSET_KEY';
 
     private nickname: string;
     private chatInputForm: Phaser.GameObjects.DOMElement;
-    private chatTextArea: Phaser.GameObjects.Text;
-    private chatMessages: ChatMessageEvent[] = [];
+    private chatTextArea: Phaser.GameObjects.DOMElement;
     private chatService: ChatService;
 
     constructor() {
@@ -27,44 +27,50 @@ export default class ChatScene extends Phaser.Scene implements ChatListener {
 
     preload() {
         this.load.html(ChatScene.CHAT_FORM_ASSET_KEY, 'assets/html/chat-form.html');
+        this.load.html(ChatScene.CHAT_DISPLAY_ASSET_KEY, 'assets/html/chat-display.html');
         this.load.image(ChatScene.PHASER_3_LOGO_ASSET_KEY, 'assets/img/phaser3-logo.png');
     }
 
     create() {
+        this.createAndAnimateLog();
+        this.createChatElements();
+        
+        this.addChatActivationListener();
+    }
+
+    onMessage(message: ChatMessageEvent): void {
+        const newChatEntry = document.createElement("div");
+        newChatEntry.innerHTML = `<span ${message.username === this.nickname ? 'class=\'self\'' : ''}>${message.username}:</span> ${message.message}`;
+        document.getElementById('chat-display')?.appendChild(newChatEntry)
+        document.getElementById('chat-display')!.scrollTop = document.getElementById('chat-display')!.scrollHeight;
+    }
+
+    private createAndAnimateLog() {
         const logo = this.add.image(200, 70, ChatScene.PHASER_3_LOGO_ASSET_KEY);
         this.tweens.add({
             targets: logo,
-            x: 600,
-            duration: 1500,
+            x: 1080,
+            duration: 2500,
             ease: 'Sine.inOut',
             yoyo: true,
             repeat: -1
         });
-
-        this.chatInputForm = this.add.dom(10, 555).createFromCache(ChatScene.CHAT_FORM_ASSET_KEY).setOrigin(0);
-        this.chatTextArea = this.add.text(10, 345, "", { backgroundColor: "#21313CDD", color: "#26924F", fontStyle: "bold" })
-            .setLineSpacing(15).setPadding(10).setFixedSize(270, 200);
-
-        
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).on("down", _event => {
-            let chatInput: HTMLInputElement = <HTMLInputElement> this.chatInputForm.getChildByName("chat-input");
-            let message: string = chatInput.value.trim();
-            if(message && message.trim().length > 0) {
-                this.chatService.sendMesage(message);
-                chatInput.value = '';
-                this.onMessage({
-                    username: this.nickname,
-                    message
-                })
-            }
-        });
     }
 
-    onMessage(message: ChatMessageEvent): void {
-        this.chatMessages.push(message);
-        if(this.chatMessages.length > 20) {
-            this.chatMessages.shift();
-        }
-        this.chatTextArea.setText(this.chatMessages.map(m => `${m.username}: ${m.message}`));
+    private createChatElements() {
+        this.chatInputForm = this.add.dom(10, 670).createFromCache(ChatScene.CHAT_FORM_ASSET_KEY).setOrigin(0);
+        this.chatTextArea = this.add.dom(10, 360).createFromCache(ChatScene.CHAT_DISPLAY_ASSET_KEY).setOrigin(0);
+    }
+
+    private addChatActivationListener() {
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).on("down", _event => {
+            let chatInput: HTMLInputElement = <HTMLInputElement>this.chatInputForm.getChildByName("chat-input");
+            let message: string = chatInput.value.trim();
+            if (message && message.trim().length > 0) {
+                this.chatService.sendMesage(message);
+                chatInput.value = '';
+                this.onMessage({ username: this.nickname, message });
+            }
+        });
     }
 }
